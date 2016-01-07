@@ -14,10 +14,10 @@ import com.socks.library.KLog;
 import com.socks.okhttp.plus.OkHttpProxy;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.squareup.okhttp.OkHttpClient;
 
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
 
 /**
  * Created by zhaokaiqiang on 15/12/22.
@@ -48,12 +48,11 @@ public class JDApplication extends Application {
 
     private void initHttpClient() {
 
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(30, TimeUnit.SECONDS);
-        builder.readTimeout(30, TimeUnit.SECONDS);
-        builder.writeTimeout(30, TimeUnit.SECONDS);
-        builder.retryOnConnectionFailure(true);
-        OkHttpProxy.setInstance(builder.build());
+        OkHttpClient client = OkHttpProxy.getInstance();
+        client.setConnectTimeout(30, TimeUnit.SECONDS);
+        client.setWriteTimeout(30, TimeUnit.SECONDS);
+        client.setReadTimeout(30, TimeUnit.SECONDS);
+        client.setRetryOnConnectionFailure(true);
 
     }
 
